@@ -36,4 +36,4 @@ applications:
     annotations:
       argocd.argoproj.io/sync-wave: '3'
     source:
-      path: cluster-configs/overlays/dev/pacman
+      path: ../pacman
