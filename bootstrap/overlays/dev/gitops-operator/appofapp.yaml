@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     path: cluster-configs/overlays/dev/app-factory
-    repoURL: git@github.com:Yantra-Vinyasa/multi-cluster-configs.git
+    repoURL: https://github.com/expektorans/multi-cluster-configs.git
     targetRevision: main
   syncPolicy:
     automated:

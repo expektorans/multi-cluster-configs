@@ -11,7 +11,7 @@ default:
       namespace: openshift-gitops
       server: https://kubernetes.default.svc
     source:
-      repoURL: git@github.com:Yantra-Vinyasa/multi-cluster-configs.git
+      repoURL: https://github.com/expektorans/multi-cluster-configs.git
       targetRevision: main
 
 projects:
@@ -21,7 +21,7 @@ projects:
     description: Project for overall cluster configuration
     namespace: openshift-gitops
     sourceRepos:
-    - git@github.com:Yantra-Vinyasa/multi-cluster-configs.git
+    - https://github.com/expektorans/multi-cluster-configs.git
     destinations: |
       - namespace: '*'
         server: https://kubernetes.default.svc
@@ -32,42 +32,8 @@ projects:
 
 applications:
 
-
-  infra-nodes:
-    annotations:
-      argocd.argoproj.io/sync-wave: '1'
-      argocd.argoproj.io/sync-options: ServerSideApply=true
-    source:
-      path: cluster-configs/overlays/dev/infra-nodes
-
-
-  cluster-proxy:
-    annotations:
-      argocd.argoproj.io/sync-wave: '2'
-      argocd.argoproj.io/sync-options: ServerSideApply=true
-    source:
-      path: cluster-configs/overlays/dev/cluster-proxy
-
   pacman:
     annotations:
       argocd.argoproj.io/sync-wave: '3'
     source:
       path: cluster-configs/overlays/dev/pacman
-
-  chrony:
-    annotations:
-      argocd.argoproj.io/sync-wave: '10'
-    source:
-      path: cluster-configs/overlays/dev/chrony
-  
-  etcd-backup:
-    annotations:
-      argocd.argoproj.io/sync-wave: '15'
-    source:
-      path: overlays/dev/etcd-backup
-    extraFields: |
-      ignoreDifferences:
-        - name: trusted-ca-bundle
-          kind: ConfigMap
-          jsonPointers:
-          - /data
