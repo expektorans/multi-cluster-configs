@@ -5,7 +5,7 @@ kind: Kustomization
 namespace: ansible-automation-platform
 
 resources:
-  - ../../../base/aap-operator
+  - ../../../../base/aap-operator
 patches:
   - path: patch-channel.yaml
     target:
