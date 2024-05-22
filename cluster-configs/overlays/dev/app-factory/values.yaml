@@ -43,3 +43,9 @@ applications:
       argocd.argoproj.io/sync-wave: '3'
     source:
       path: cluster-configs/overlays/dev/aap-operator/stable-2.4
+
+  aap-controller:
+    annotations:
+      argocd.argoproj.io/sync-wave: '10'
+    source:
+      path: cluster-configs/overlays/dev/aap-controller/default
