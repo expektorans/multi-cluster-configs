@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: cluster-configs/overlay/dev/app-factory
+    path: cluster-configs/overlays/dev/app-factory
     repoURL: https://github.com/expektorans/multi-cluster-configs.git
     targetRevision: main
   syncPolicy:
