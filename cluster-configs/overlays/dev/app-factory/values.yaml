@@ -54,4 +54,4 @@ applications:
     annotations:
       argocd.argoproj.io/sync-wave: '4'
     source:
-      path: cluster-configs/overlays/dev/keycloak-operator
+      path: cluster-configs/overlays/dev/keycloak-operator/stable-v22
