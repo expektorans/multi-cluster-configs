@@ -15,7 +15,7 @@ patches:
   - patch: |-
       - op: replace
         path: /spec/server/host
-        value: https://openshift-gitops-server-openshift-gitops.apps.liberation.mountain.expektorans.de
+        value: openshift-gitops-server-openshift-gitops.apps.liberation.mountain.expektorans.de
     target:
       kind: ArgoCD
       name: openshift-gitops
