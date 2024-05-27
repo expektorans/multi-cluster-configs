@@ -10,3 +10,13 @@ resources:
 - resources/crb.yaml
 - resources/argo-ns.yaml
 - resources/trusted-ca-bundle-cm.yaml
+
+patches:
+  - patch: |-
+      - op: replace
+        path: /spec/server/host
+        value: https://openshift-gitops-server-openshift-gitops.apps.liberation.mountain.expektorans.de
+    target:
+      kind: ArgoCD
+      name: openshift-gitops
+      namespace: openshift-gitops
