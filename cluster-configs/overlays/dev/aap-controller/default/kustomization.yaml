@@ -4,3 +4,12 @@ kind: Kustomization
 
 resources:
   - ../../../../base/aap-controller/
+
+patches:
+  - patch: |-
+      - op: replace
+        path: /spec/href
+        value: https://controller-ansible-automation-platform.apps.liberation.mountain.expektorans.de
+    target:
+      kind: ConsoleLink
+      name: aap-controller
