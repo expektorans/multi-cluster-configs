@@ -49,3 +49,9 @@ applications:
       argocd.argoproj.io/sync-wave: '10'
     source:
       path: cluster-configs/overlays/dev/aap-controller/default
+
+  keycloak-operator:
+    annotations:
+      argocd.argoproj.io/sync-wave: '4'
+    source:
+      path: cluster-configs/overlays/dev/keycloak-operator
