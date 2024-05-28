@@ -1,0 +1,14 @@
+apiVersion: k8s.keycloak.org/v2alpha1
+kind: Keycloak
+metadata:
+  labels:
+    app: sso
+  name: example-keycloak
+  namespace: keycloak
+spec:
+  hostname:
+    strict: false
+    strictBackchannel: false
+  http:
+    httpEnabled: true
+  instances: 1
