@@ -3,3 +3,13 @@ kind: Kustomization
 
 resources:
   - "../../../base/keycloak/"
+
+patches:
+  - patch: |
+      - op: replace
+        path: /spec/hostname/hostname
+        value: 'example-keycloak-keycloak.apps.liberation.mountain.expektorans.de'
+    target:
+      kind: Keycloak
+      namespace: keycloak
+      name: example-keycloak

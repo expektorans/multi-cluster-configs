@@ -9,9 +9,9 @@ spec:
   hostname:
     strict: false
     strictBackchannel: false
-    hostname: example-keycloak-keycloak.apps.liberation.mountain.expektorans.de
+    hostname: patch-me
   http:
-    tlsSecret: keycloak-example-tls-secret
+    httpEnabled: true
   ingress:
     className: openshift-default
   instances: 1
