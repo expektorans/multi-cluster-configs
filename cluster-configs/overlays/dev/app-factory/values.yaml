@@ -67,3 +67,5 @@ applications:
       argocd.argoproj.io/sync-wave: '1'
     source:
       path: cluster-configs/overlays/dev/openldap
+    destination:
+      namespace: openldap
