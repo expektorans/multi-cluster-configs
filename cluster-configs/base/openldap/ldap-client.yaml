@@ -1,0 +1,70 @@
+---
+apiVersion: v1
+data:
+  ldap.conf: |
+    BASE dc=expektorans,dc=de
+    URI ldap://openldap:1389
+  check_auth.sh: |
+    #!/usr/bin/env bash
+
+    set -euo pipefail
+
+    ldapwhoami -vvv -D 'cn=aap,ou=users,dc=expektorans,dc=de' -x -w ${LDAP_CLIENT_PASSWORD}
+kind: ConfigMap
+metadata:
+  name: openldap-client
+...
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: openldap-client
+  name: openldap-client
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: openldap-client
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: openldap-client
+    spec:
+      volumes:
+        - name: openldap-client
+          configMap:
+            name: openldap-client
+            defaultMode: 0755
+      containers:
+      - image: docker.io/bitnami/openldap:latest
+        name: openldap
+        imagePullPolicy: Always
+        securityContext:
+          capabilities:
+            drop:
+              - ALL
+            add:
+              - NET_BIND_SERVICE
+        volumeMounts:
+          - name: openldap-client
+            mountPath: /etc/openldap/ldap.conf
+            subPath: ldap.conf
+          - name: openldap-client
+            mountPath: /check_auth.sh
+            subPath: check_auth.sh
+        env:
+          - name: LDAPCONF
+            value: /etc/openldap/ldap.conf
+          - name: LDAP_CLIENT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: userpassword
+                name: openldap
+        command:
+          - tail
+          - -f
+          - /dev/null

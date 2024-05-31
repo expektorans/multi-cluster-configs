@@ -1,0 +1,73 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: openldap
+  name: openldap
+spec:
+  revisionHistoryLimit: 0
+  replicas: 1
+  selector:
+    matchLabels:
+      app: openldap
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: openldap
+    spec:
+      containers:
+      - image: docker.io/bitnami/openldap:latest
+        name: openldap
+        imagePullPolicy: Always
+        volumeMounts:
+          - mountPath: /bitnami/openldap
+            name: openldap
+        securityContext:
+          capabilities:
+            drop:
+              - ALL
+            add:
+              - NET_BIND_SERVICE
+        env:
+          - name: LDAP_ADMIN_USERNAME
+            value: "admin"
+          - name: LDAP_ADMIN_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: adminpassword
+                name: openldap
+          - name: LDAP_ROOT
+            value: dc=expektorans,dc=de
+          - name: LDAP_ADMIN_DN
+            value: cn=admin,dc=expektorans,dc=de
+          - name: LDAP_USERS
+            value: aap
+          - name: LDAP_PASSWORDS
+            valueFrom:
+              secretKeyRef:
+                key: userpassword
+                name: openldap
+      volumes:
+        - name: openldap
+          persistentVolumeClaim:
+            claimName: openldap
+...
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: openldap
+    app.kubernetes.io/instance: openldap
+  name: openldap
+spec:
+  ports:
+  - port: 1389
+    protocol: TCP
+    targetPort: 1389
+  selector:
+    app: openldap
+...
