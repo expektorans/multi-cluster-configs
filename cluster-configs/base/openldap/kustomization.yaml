@@ -5,3 +5,4 @@ resources:
   - ldap-client.yaml
   - ldap-server.yaml
   - pvc.yaml
+  - ns.yaml
