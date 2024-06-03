@@ -50,6 +50,12 @@ applications:
     source:
       path: cluster-configs/overlays/dev/aap-controller/default
 
+  aap-hub:
+    annotations:
+      argocd.argoproj.io/sync-wave: '10'
+    source:
+      path: cluster-configs/overlays/dev/aap-hub
+
   keycloak-operator:
     annotations:
       argocd.argoproj.io/sync-wave: '4'
