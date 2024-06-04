@@ -5,3 +5,4 @@ kind: Kustomization
 resources:
   - automationcontroller.yaml
   - console-link.yaml
+  - secret.yaml
