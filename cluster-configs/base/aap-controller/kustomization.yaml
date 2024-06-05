@@ -6,3 +6,4 @@ resources:
   - automationcontroller.yaml
   - console-link.yaml
   - secret.yaml
+  - demo-removeme.yaml
