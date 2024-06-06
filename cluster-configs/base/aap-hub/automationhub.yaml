@@ -11,6 +11,8 @@ spec:
   image_pull_policy: IfNotPresent
   pulp_settings:
     debug: "True"
+    galaxy_collection_signing_service: ''
+    galaxy_container_signing_service: ''
   web:
     replicas: 1
   file_storage_access_mode: ReadWriteMany
