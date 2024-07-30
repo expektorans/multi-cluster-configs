@@ -6,4 +6,4 @@
   value: 'Manual'
 - op: replace
   path: /spec/startingCSV
-  value: 'aap-operator.v2.4.0-0.1718152680'
+  value: 'aap-operator.v2.4.0-0.1718152210'
