@@ -1,0 +1,24 @@
+apiVersion: v1
+data:
+  backup_script.sh: "#!/usr/bin/env bash\n\nset -euo pipefail\n\nexport KEEP_DAYS=5\nexport
+    BACKUPS_DIR=\"/backups\"\nexport AC_NAME=\"controller\"\nexport NAMESPACE=\"ansible-automation-platform\"\nexport
+    BACKUP_NAME=$AC_NAME-backup-$(date +'%Y-%m-%d-%H%M')\nexport BACKUP_PVC=aap-controller-backup\nexport
+    CLEAN_BACKUP_ON_DELETE=false\n\n# Create a new backup resource\ncat <<EOF | oc
+    apply -f -\napiVersion: automationcontroller.ansible.com/v1beta1\nkind: AutomationControllerBackup\nmetadata:\n
+    \   name: $BACKUP_NAME\n    labels:\n        app.kubernetes.io/name: $BACKUP_NAME\n
+    \       app.kubernetes.io/part-of: $BACKUP_NAME\n    spec:\n        backup_pvc:
+    $BACKUP_PVC\n        deployment_name: $AC_NAME\n        clean_backup_on_delete:
+    $CLEAN_BACKUP_ON_DELETE\nEOF\n\n# Delete older backups \n# sed outputs: <backup-name>
+    <YYYY-MM-DD>\n# awk returns the entries where the date is $KEEP_DAYS before the
+    current date\n# xargs deletes those filtered backups\noc get AutomationControllerBackup
+    -n $NAMESPACE -o go-template --template '{{range .items}}{{.metadata.name}} {{.metadata.creationTimestamp}}{{\"\\n\"}}{{end}}'
+    \\\n    | sed -e 's/\\(^.*\\) \\(....-..-..\\)T.*$/\\1 \\2/g' \\\n    | awk '$2
+    <= \"'$(date -d \"$(echo $KEEP_DAYS) day ago\" +'%Y-%m-%d')'\" { print $1 }' \\\n
+    \   | xargs --no-run-if-empty oc delete AutomationControllerBackup -n $NAMESPACE"
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2024-07-31T11:42:45Z"
+  name: controller-instance-backup
+  namespace: ansible-automation-platform
+  resourceVersion: "54329587"
+  uid: 2442e760-e705-4ca3-b1fa-d353ccb1f44c

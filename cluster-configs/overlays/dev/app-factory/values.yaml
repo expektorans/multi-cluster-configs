@@ -75,3 +75,13 @@ applications:
       path: cluster-configs/overlays/dev/openldap
     destination:
       namespace: openldap
+
+  aap-backup:
+    annotations:
+      argocd.argoproj.io/sync-wave: '20'
+    source:
+      path: cluster-configs/overlays/dev/aap-backup
+    destination:
+      namespace: ansible-automation-platform
+    syncOptions:
+      - Validate=true

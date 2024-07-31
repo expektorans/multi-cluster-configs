@@ -1,0 +1,8 @@
+cm:
+  oc create cm aap-instance-backup --from-file=ac_backup.sh --dry-run=client -o yaml > cm.yaml
+
+apply: cm
+  oc apply -f cm.yaml -f cron.yaml
+
+delete: cm
+  oc delete -f cm.yaml -f cron.yaml
