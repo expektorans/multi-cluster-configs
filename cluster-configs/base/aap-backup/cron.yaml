@@ -5,7 +5,7 @@ metadata:
   name: controller-instance-backup
   namespace: ansible-automation-platform
 spec:
-  schedule: "* * * * *"
+  schedule: "0 0 * * *"
   successfulJobsHistoryLimit: 0
   failedJobsHistoryLimit: 1
   concurrencyPolicy: Forbid
